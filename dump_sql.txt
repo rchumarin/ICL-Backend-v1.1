@@ -1,0 +1,39 @@
+-- Создаем БД
+CREATE DATABASE «rafael.chumarin" WITH ENCODING 'UTF8' LC_COLLATE='ru_RU.UTF-8' LC_CTYPE='ru_RU.UTF-8' TEMPLATE=template0;
+
+-- Создаем пользователя и пароль 
+CREATE USER user1 WITH ENCRYPTED PASSWORD 'p@ssw0rd';
+
+-- Устанавливаем владельца БД
+ALTER DATABASE "rafael.chumarin" OWNER TO user1;
+
+-- Создаем таблицы
+CREATE TABLE IF NOT EXISTS users (clientid character(3) NOT NULL PRIMARY KEY, fname character varying(30));
+
+CREATE TABLE IF NOT EXISTS messages (id serial NOT NULL PRIMARY KEY, message character varying(120), clientid character(3), FOREIGN KEY (clientid) REFERENCES users(clientid));
+
+-- Наполняем содержимым таблицы
+INSERT INTO users (clientid, fname) VALUES 
+('001', 'Рафаэль'), 
+('002', 'Ильвир'), 
+('003', 'Антон'), 
+('004', 'Ильсур');
+
+INSERT INTO messages (message, clientid) VALUES 
+('Привет. Как дела?', '001'),
+('Привет, хорошо. Как сам?', '002'),
+('Привет, замечательно. Как твои дела?', '003'),
+('Салют! Все тип-топ. Как твои делишки?', '004'),
+('Дела норм. Давайте встретимся на выходных. Что скажете?', '001'),
+('Давайте в ближайшую субботу на 15ч в Центре?', '002'),
+('Отлично. Как у остальных со временем?', '001'),
+('Давате, я могу.', '003'),
+('У меня тоже все получается.', '004'),
+('Отлично. Тогда до встречи!', '001'),
+('До встречи!', '002'),
+('Пока!', '003'),
+('До встречи!', '004');
+
+-- Устанавливаем владельца таблицы
+alter table messages owner to user1;
+alter table users owner to user1;

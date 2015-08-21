@@ -36,4 +36,5 @@ INSERT INTO messages (message, clientid) VALUES
 
 -- Устанавливаем владельца таблицы
 alter table messages owner to user1;
+
 alter table users owner to user1;
